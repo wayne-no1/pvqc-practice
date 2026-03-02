@@ -78,9 +78,43 @@
         .history-title { font-size: 18px; font-weight: bold; color: var(--heading-color); }
         .history-score { font-weight: bold; color: var(--btn-bg); }
         #history-list { max-height: 500px; overflow-y: auto; margin-top: 20px; }
+        /* 加油打氣圖 - 左上角正方形樣式 (對齊 P) */
+        .cheer-wrapper { position: absolute; top: 30px; left: calc(50% - 410px); z-index: 2000; text-align: center; }
+        @media screen and (max-width: 950px) {
+            .cheer-wrapper { left: 20px; }
+        }
+        .cheer-box { 
+            width: 150px; height: 150px; 
+            border: 2px solid var(--border-color); 
+            border-radius: 8px; 
+            display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; overflow: hidden; background-color: var(--container-bg);
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .cheer-box:hover { border-color: var(--btn-bg); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
+        .cheer-box img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .cheer-box .plus-icon { font-size: 40px; color: var(--border-color); font-weight: 300; }
+        .remove-cheer-btn { 
+            position: absolute; top: -10px; right: -10px; 
+            background: #e74c3c; color: white; border: 2px solid white; 
+            border-radius: 50%; width: 28px; height: 28px; 
+            cursor: pointer; display: none; font-size: 18px; line-height: 24px; padding: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .remove-cheer-btn:hover { background: #c0392b; transform: scale(1.1); }
     </style>
 </head>
 <body>
+
+<div class="cheer-wrapper">
+    <div class="cheer-box" onclick="document.getElementById('cheer-input').click()" id="cheer-display">
+        <span class="plus-icon" id="cheer-plus">+</span>
+        <img id="cheer-img" src="" alt="加油！">
+        <button class="remove-cheer-btn" id="remove-cheer-btn" onclick="event.stopPropagation(); removeCheerImage();" title="移除圖片">×</button>
+    </div>
+    <input type="file" id="cheer-input" accept="image/*" onchange="handleCheerUpload(this)" style="display: none;">
+</div>
 
 <div class="container" id="home-view">
     <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="切換深色/淺色模式">🌙</button>
@@ -97,6 +131,9 @@
     <p class="instruction-text">
         請在下方輸入您的單字清單，每一行一個單字，格式為「<strong>英文,中文</strong>」（可用半形或全形逗號）。
     </p>
+    <div style="margin-bottom: 5px; text-align: right;">
+        <button class="btn" style="background-color: #f39c12; padding: 6px 12px; font-size: 14px; margin: 0;" onclick="autoFormat()">🪄 智慧修復格式</button>
+    </div>
     <textarea id="vocab-input" rows="8">
 wireless access point, 無線存取點/無線基地台
 apple, 蘋果
@@ -140,9 +177,7 @@ computer, 電腦</textarea>
     </div>
         <br>
         <button class="btn home-btn" onclick="showHistory()">📊 查看最近 10 次紀錄</button>
-        </div>
-
-        <div class="container hidden" id="history-view">
+        </div>        <div class="container hidden" id="history-view">
         <h1>測驗歷史紀錄</h1>
         <p class="instruction-text" style="text-align:center">點擊紀錄可查看詳細錯誤對照表</p>
         <div id="history-list"></div>
@@ -188,15 +223,15 @@ computer, 電腦</textarea>
             alert("請至少勾選一個測驗模式！");
             return;
         }
-        modeQueue = checked.map(v => parseInt(v));
-        currentModeIndex = 0;
         
         let parsedVocab = parseVocab();
         if (parsedVocab.length < 4) {
-            alert("請在文字框內至少輸入 4 組單字！");
+            alert(`單字量不足！目前的格式解析出 ${parsedVocab.length} 個單字，請確保每行格式為「英文,中文」，且至少輸入 4 組。`);
             return;
         }
         
+        modeQueue = checked.map(v => parseInt(v));
+        currentModeIndex = 0;
         startNextModeInQueue();
     }
 
@@ -251,7 +286,45 @@ computer, 電腦</textarea>
             document.getElementById('theme-btn').innerText = '☀️';
         }
         refreshBankSelect();
+        initCheerImage();
     };
+
+    function initCheerImage() {
+        const cheerData = localStorage.getItem('pvqc_cheer');
+        const img = document.getElementById('cheer-img');
+        const plus = document.getElementById('cheer-plus');
+        const removeBtn = document.getElementById('remove-cheer-btn');
+        
+        if (cheerData) {
+            img.src = cheerData;
+            img.style.display = 'block';
+            plus.style.display = 'none';
+            removeBtn.style.display = 'block';
+        } else {
+            img.src = "";
+            img.style.display = 'none';
+            plus.style.display = 'block';
+            removeBtn.style.display = 'none';
+        }
+    }
+
+    function handleCheerUpload(input) {
+        const file = input.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const base64Data = e.target.result;
+                localStorage.setItem('pvqc_cheer', base64Data);
+                initCheerImage();
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function removeCheerImage() {
+        localStorage.removeItem('pvqc_cheer');
+        initCheerImage();
+    }
 
     function refreshBankSelect() {
         const banks = JSON.parse(localStorage.getItem('pvqc_banks') || '{}');
@@ -316,20 +389,53 @@ computer, 電腦</textarea>
         }
     }
 
+    function autoFormat() {
+        const text = document.getElementById('vocab-input').value.trim();
+        if (!text) return;
+        const parsed = parseVocab();
+        if (parsed.length === 0) {
+            alert("無法辨識目前格式！請確保每行至少有一個空格或符號。");
+            return;
+        }
+        const formatted = parsed.map(item => `${item.en}, ${item.zh}`).join('\n');
+        document.getElementById('vocab-input').value = formatted;
+        alert(`已成功辨識並修復 ${parsed.length} 個單字！`);
+    }
+
     function parseVocab() {
         const text = document.getElementById('vocab-input').value.trim();
         if (!text) return [];
         const lines = text.split('\n');
         let newVocab = [];
         for (let line of lines) {
-            line = line.trim();
-            if (!line) continue;
-            // 支援半形或全形逗號
-            let parts = line.split(/[,，]/);
+            let originalLine = line.trim();
+            if (!originalLine) continue;
+            
+            let en = "", zh = "";
+            // 1. 優先試圖以常見分隔符分割 (半/全形逗號、分號、冒號、Tab、多空格、-、|)
+            let parts = originalLine.split(/[,，;:：;\t\-|\/]| {2,}/);
             if (parts.length >= 2) {
-                let en = parts[0].trim();
-                let zh = parts.slice(1).join(',').trim();
-                if (en && zh) newVocab.push({ en: en, zh: zh });
+                en = parts[0].trim();
+                zh = parts.slice(1).join(',').trim();
+            } else {
+                // 2. 智慧邊界偵測：找尋第一個中文字 (Unicode \u4e00-\u9fa5) 的位置
+                const cjkMatch = originalLine.match(/[\u4e00-\u9fa5]/);
+                if (cjkMatch) {
+                    const index = cjkMatch.index;
+                    en = originalLine.substring(0, index).trim();
+                    zh = originalLine.substring(index).trim();
+                } else {
+                    // 3. 最後手段：尋找第一個空格
+                    let spaceParts = originalLine.split(/\s+/);
+                    if (spaceParts.length >= 2) {
+                        en = spaceParts[0].trim();
+                        zh = spaceParts.slice(1).join(' ').trim();
+                    }
+                }
+            }
+            
+            if (en && zh) {
+                newVocab.push({ en: en, zh: zh });
             }
         }
         return newVocab;
