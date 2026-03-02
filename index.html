@@ -65,6 +65,19 @@
         .theme-toggle { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-color); transition: transform 0.3s; padding: 5px; }
         .theme-toggle:hover { transform: scale(1.1); }
         .instruction-text { font-size: 14px; color: var(--sub-heading); text-align: left; padding: 0 5%; }
+        /* 測驗結果表格樣式 */
+        .results-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 16px; }
+        .results-table th, .results-table td { border: 1px solid var(--border-color); padding: 12px; text-align: left; }
+        .results-table th { background-color: var(--option-bg); color: var(--heading-color); }
+        .result-correct { color: #28a745; font-weight: bold; }
+        .result-wrong { color: #dc3545; font-weight: bold; }
+        /* 歷史紀錄相關樣式 */
+        .history-item { background-color: var(--option-bg); margin: 10px 0; padding: 15px; border-radius: 8px; text-align: left; cursor: pointer; transition: transform 0.2s; }
+        .history-item:hover { transform: scale(1.01); background-color: var(--option-hover); }
+        .history-meta { display: flex; justify-content: space-between; font-size: 14px; color: var(--sub-heading); margin-bottom: 5px; }
+        .history-title { font-size: 18px; font-weight: bold; color: var(--heading-color); }
+        .history-score { font-weight: bold; color: var(--btn-bg); }
+        #history-list { max-height: 500px; overflow-y: auto; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -72,7 +85,15 @@
 <div class="container" id="home-view">
     <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="切換深色/淺色模式">🌙</button>
     <h1>PVQC 專業英文單字練習系統</h1>
-    <h3>步驟 1：輸入單字清單</h3>
+    <h3>步驟 1：選擇或建立單字庫</h3>
+    <div style="margin-bottom: 15px;">
+        <select id="bank-select" onchange="loadSelectedBank()" style="font-size: 16px; padding: 5px; width: 40%; max-width: 250px;">
+            <option value="">-- 建立新單字庫 --</option>
+        </select>
+        <button class="btn select-btn" onclick="saveBank()" style="padding: 6px 12px; margin: 0 5px; font-size: 14px;">儲存此單字庫</button>
+        <button class="btn" style="background-color: #dc3545; padding: 6px 12px; margin: 0; font-size: 14px;" onclick="deleteBank()">刪除</button>
+    </div>
+    <input type="text" id="bank-title" placeholder="請輸入單字庫標題 (如：計算機單字庫)" style="width: 80%; font-size: 18px; padding: 10px; margin-bottom: 10px; border: 1px solid var(--input-border); border-radius: 5px; background-color: var(--input-bg); color: var(--text-color);">
     <p class="instruction-text">
         請在下方輸入您的單字清單，每一行一個單字，格式為「<strong>英文,中文</strong>」（可用半形或全形逗號）。
     </p>
@@ -84,24 +105,67 @@ cat, 貓
 dog, 狗
 computer, 電腦</textarea>
     <h3>步驟 2：選擇測驗模式</h3>
-    <div class="test-btn-group">
-        <button class="btn" onclick="startTest(1)">測驗一：看中文 拼英文</button>
-        <button class="btn" onclick="startTest(2)">測驗二：聽英文 選中文</button>
-        <button class="btn" onclick="startTest(3)">測驗三：看英文 選中文</button>
-        <button class="btn" onclick="startTest(4)">測驗四：聽聲音 選英文</button>
-        <button class="btn" onclick="startTest(5)">測驗五：看中文 選音檔</button>
-        <button class="btn" onclick="startTest(6)">測驗六：看英文 選音檔</button>
+    <div style="margin-bottom: 15px;">
+        <label for="q-count" style="font-size: 18px; color: var(--text-color); font-weight: bold;">測驗題數 (最高 100 題)：</label>
+        <input type="number" id="q-count" value="20" min="1" max="100" style="width: 70px; font-size: 18px; padding: 5px; text-align: center; border: 1px solid var(--input-border); border-radius: 5px; background-color: var(--input-bg); color: var(--text-color);">
     </div>
-</div>
+    <div style="text-align: left; display: inline-block; margin-bottom: 20px; font-size: 20px;">
+        <div style="margin: 10px 0; display: flex; align-items: center;">
+            <input type="checkbox" class="mode-check" value="1" id="m1" style="width: 20px; height: 20px; margin-right: 10px;"> 
+            <label for="m1">測驗一：看中文 拼英文</label>
+        </div>
+        <div style="margin: 10px 0; display: flex; align-items: center;">
+            <input type="checkbox" class="mode-check" value="2" id="m2" style="width: 20px; height: 20px; margin-right: 10px;"> 
+            <label for="m2">測驗二：聽英文 選中文</label>
+        </div>
+        <div style="margin: 10px 0; display: flex; align-items: center;">
+            <input type="checkbox" class="mode-check" value="3" id="m3" style="width: 20px; height: 20px; margin-right: 10px;"> 
+            <label for="m3">測驗三：看英文 選中文</label>
+        </div>
+        <div style="margin: 10px 0; display: flex; align-items: center;">
+            <input type="checkbox" class="mode-check" value="4" id="m4" style="width: 20px; height: 20px; margin-right: 10px;"> 
+            <label for="m4">測驗四：聽聲音 選英文</label>
+        </div>
+        <div style="margin: 10px 0; display: flex; align-items: center;">
+            <input type="checkbox" class="mode-check" value="5" id="m5" style="width: 20px; height: 20px; margin-right: 10px;"> 
+            <label for="m5">測驗五：看中文 選發音</label>
+        </div>
+        <div style="margin: 10px 0; display: flex; align-items: center;">
+            <input type="checkbox" class="mode-check" value="6" id="m6" style="width: 20px; height: 20px; margin-right: 10px;"> 
+            <label for="m6">測驗六：看英文 選發音</label>
+        </div>
+    </div>
+    <div class="test-btn-group">
+        <button class="btn select-btn" onclick="startSelectedModes()" style="width: 80%; font-size: 20px; font-weight: bold;">🚀 開始勾選的練習 (每項 15 分鐘)</button>
+    </div>
+        <br>
+        <button class="btn home-btn" onclick="showHistory()">📊 查看最近 10 次紀錄</button>
+        </div>
+
+        <div class="container hidden" id="history-view">
+        <h1>測驗歷史紀錄</h1>
+        <p class="instruction-text" style="text-align:center">點擊紀錄可查看詳細錯誤對照表</p>
+        <div id="history-list"></div>
+        <br>
+        <button class="btn home-btn" onclick="goHome()">回到主頁</button>
+        </div>
+
+        <div class="container hidden" id="detail-view">
+        <h1 id="detail-title">測驗詳情回顧</h1>
+        <div id="detail-content"></div>
+        <br>
+        <button class="btn home-btn" onclick="showHistory()">返回歷史清單</button>
+        </div>
 
 <div class="container hidden" id="test-view">
-    <h2 id="test-title" style="color: var(--sub-heading);"></h2>
+    <div id="timer" style="position: absolute; top: 10px; right: 20px; font-size: 24px; font-weight: bold; color: #dc3545;"></div>
+    <h2 id="test-title" style="color: var(--sub-heading); margin-top: 20px;"></h2>
     <div id="question-area"></div>
     <div id="input-area"></div>
     <div id="feedback"></div>
+    <button class="btn" onclick="nextQuestion()" id="next-btn" style="background-color: #6c757d; margin-top: 20px;">跳過此題</button>
     <p style="font-size: 18px; margin-top: 20px;">得分: <span id="score">0</span> / <span id="total-questions">0</span></p>
-    <button class="btn hidden" onclick="nextQuestion()" id="next-btn" style="background-color: #17a2b8;">下一題</button>
-    <br><br>
+    <br>
     <button class="btn home-btn" onclick="goHome()">回到主頁</button>
 </div>
 
@@ -113,6 +177,66 @@ computer, 電腦</textarea>
     let currentWord = null;
     let questions = [];
     let totalQ = 0;
+    let testResults = []; // 儲存每一題的結果
+    let modeQueue = []; // 儲存勾選的模式順序
+    let timerInterval = null;
+    let currentModeIndex = 0;
+
+    function startSelectedModes() {
+        const checked = Array.from(document.querySelectorAll('.mode-check:checked')).map(el => parseInt(el.value));
+        if (checked.length === 0) {
+            alert("請至少勾選一個測驗模式！");
+            return;
+        }
+        modeQueue = checked.map(v => parseInt(v));
+        currentModeIndex = 0;
+        
+        let parsedVocab = parseVocab();
+        if (parsedVocab.length < 4) {
+            alert("請在文字框內至少輸入 4 組單字！");
+            return;
+        }
+        
+        startNextModeInQueue();
+    }
+
+    function startNextModeInQueue() {
+        if (currentModeIndex >= modeQueue.length) {
+            return; // 結束，會交給 loadQuestion 處理
+        }
+        startTest(modeQueue[currentModeIndex]);
+        startTimer(15 * 60); // 15 分鐘
+    }
+
+    function startTimer(seconds) {
+        if (timerInterval) clearInterval(timerInterval);
+        const timerDisplay = document.getElementById('timer');
+        
+        function updateTimerDisplay(s) {
+            const mins = Math.floor(s / 60);
+            const secs = s % 60;
+            timerDisplay.innerText = `⏳ ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        updateTimerDisplay(seconds);
+        
+        timerInterval = setInterval(() => {
+            seconds--;
+            if (seconds < 0) {
+                clearInterval(timerInterval);
+                alert("15 分鐘時間到！即將切換模式。");
+                currentModeIndex++;
+                if (currentModeIndex < modeQueue.length) {
+                    startNextModeInQueue();
+                } else {
+                    currentQuestionIndex = totalQ; // 強制結束最後一個模式
+                    loadQuestion();
+                }
+                return;
+            }
+            updateTimerDisplay(seconds);
+        }, 1000);
+    }
 
     function toggleTheme() {
         document.body.classList.toggle('dark-mode');
@@ -126,7 +250,71 @@ computer, 電腦</textarea>
             document.body.classList.add('dark-mode');
             document.getElementById('theme-btn').innerText = '☀️';
         }
+        refreshBankSelect();
     };
+
+    function refreshBankSelect() {
+        const banks = JSON.parse(localStorage.getItem('pvqc_banks') || '{}');
+        const select = document.getElementById('bank-select');
+        select.innerHTML = '<option value="">-- 建立新單字庫 --</option>';
+        for (let title in banks) {
+            let opt = document.createElement('option');
+            opt.value = title;
+            opt.innerText = title;
+            select.appendChild(opt);
+        }
+    }
+
+    function loadSelectedBank() {
+        const title = document.getElementById('bank-select').value;
+        const titleInput = document.getElementById('bank-title');
+        const vocabInput = document.getElementById('vocab-input');
+        if (title === "") {
+            titleInput.value = "";
+            vocabInput.value = "";
+        } else {
+            const banks = JSON.parse(localStorage.getItem('pvqc_banks') || '{}');
+            titleInput.value = title;
+            if (banks[title]) {
+                vocabInput.value = banks[title];
+            }
+        }
+    }
+
+    function saveBank() {
+        const title = document.getElementById('bank-title').value.trim();
+        const content = document.getElementById('vocab-input').value.trim();
+        if (!title) {
+            alert('請輸入單字庫標題！');
+            return;
+        }
+        if (!content) {
+            alert('請輸入單字內容！');
+            return;
+        }
+        const banks = JSON.parse(localStorage.getItem('pvqc_banks') || '{}');
+        banks[title] = content;
+        localStorage.setItem('pvqc_banks', JSON.stringify(banks));
+        alert('單字庫「' + title + '」已儲存！');
+        refreshBankSelect();
+        document.getElementById('bank-select').value = title;
+    }
+
+    function deleteBank() {
+        const select = document.getElementById('bank-select');
+        const title = select.value;
+        if (!title) {
+            alert('請先選擇要刪除的單字庫！');
+            return;
+        }
+        if (confirm('確定要刪除單字庫「' + title + '」嗎？')) {
+            const banks = JSON.parse(localStorage.getItem('pvqc_banks') || '{}');
+            delete banks[title];
+            localStorage.setItem('pvqc_banks', JSON.stringify(banks));
+            refreshBankSelect();
+            loadSelectedBank();
+        }
+    }
 
     function parseVocab() {
         const text = document.getElementById('vocab-input').value.trim();
@@ -182,11 +370,17 @@ computer, 電腦</textarea>
         alert("請在文字框內至少輸入 4 組單字，以便產生足夠的選擇題選項！");
         return;
     }
+    
+    let maxQ = parseInt(document.getElementById('q-count').value, 10);
+    if (isNaN(maxQ) || maxQ < 1) maxQ = 20;
+    if (maxQ > 100) maxQ = 100;
+    
     vocab = parsedVocab;
     currentTestType = type;
     score = 0;
     currentQuestionIndex = 0;
-    totalQ = vocab.length;
+    testResults = []; // 清空上次結果
+    
     let titles = [
         "",
         "測驗一：看中文 拼英文",
@@ -197,7 +391,13 @@ computer, 電腦</textarea>
         "測驗六：看英文 選發音"
     ];
     document.getElementById('test-title').innerText = titles[type];
+    
     questions = shuffle([...vocab]);
+    if (questions.length > maxQ) {
+        questions = questions.slice(0, maxQ);
+    }
+    totalQ = questions.length;
+    
     document.getElementById('home-view').classList.add('hidden');
     document.getElementById('test-view').classList.remove('hidden');
     loadQuestion();
@@ -205,18 +405,71 @@ computer, 電腦</textarea>
 
     function loadQuestion() {
         if (currentQuestionIndex >= totalQ) {
-            document.getElementById('question-area').innerText = "測驗結束！";
-            document.getElementById('input-area').innerHTML = "";
+            // 如果還有下一個模式，自動切換
+            if (modeQueue.length > 0 && currentModeIndex < modeQueue.length - 1) {
+                currentModeIndex++;
+                startNextModeInQueue();
+                return;
+            }
+            
+            // 所有模式真正結束
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById('timer').innerText = "";
+            
+            document.getElementById('question-area').innerText = "測驗全部結束！";
             document.getElementById('next-btn').classList.add('hidden');
+            
             let finalColor = document.body.classList.contains('dark-mode') ? '#64b5f6' : 'blue';
-            document.getElementById('feedback').innerHTML = `<span style="color: ${finalColor};">總得分：${score} / ${totalQ}</span>`;
+            let html = `<h3 style="color: ${finalColor};">總得分：${score} / ${totalQ}</h3>`;
+            
+            // 產生成績清單
+            html += `<table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>題目</th>
+                                <th>您的答案</th>
+                                <th>正確答案</th>
+                                <th>結果</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+            
+            testResults.forEach(res => {
+                const statusClass = res.isCorrect ? 'result-correct' : 'result-wrong';
+                const statusText = res.isCorrect ? '✅' : '❌';
+                html += `<tr>
+                            <td>${res.qText}</td>
+                            <td>${res.userAns}</td>
+                            <td>${res.correctAns}</td>
+                            <td class="${statusClass}">${statusText}</td>
+                         </tr>`;
+            });
+            
+            html += `</tbody></table>`;
+            document.getElementById('input-area').innerHTML = html;
+            document.getElementById('feedback').innerHTML = "";
+            
+            // 儲存至歷史紀錄
+            saveHistory({
+                title: document.getElementById('test-title').innerText,
+                score: score,
+                total: totalQ,
+                results: testResults,
+                time: new Date().toLocaleString()
+            });
             return;
         }
         currentWord = questions[currentQuestionIndex];
         document.getElementById('question-area').innerHTML = "";
         document.getElementById('input-area').innerHTML = "";
         document.getElementById('feedback').innerText = "";
-        document.getElementById('next-btn').classList.add('hidden');
+        
+        // 重置下一題按鈕為跳過模式
+        const nextBtn = document.getElementById('next-btn');
+        nextBtn.innerText = "跳過此題";
+        nextBtn.style.backgroundColor = "#6c757d";
+        nextBtn.classList.remove('hidden');
+
         document.getElementById('score').innerText = score;
         document.getElementById('total-questions').innerText = totalQ;
 
@@ -249,7 +502,17 @@ computer, 電腦</textarea>
         }
     }
 
-    function handleEnter(e) { if(e.key === 'Enter') checkAnswer1(); }
+    function handleEnter(e) { 
+        if(e.key === 'Enter') {
+            const nextBtn = document.getElementById('next-btn');
+            // 如果已經回答過了（按鈕顯示下一題），按 Enter 就直接下一題
+            if (nextBtn.innerText === "下一題") {
+                nextQuestion();
+            } else {
+                checkAnswer1();
+            }
+        }
+    }
     
     function updateCharHint() {
         const input = document.getElementById('ans-input');
@@ -273,9 +536,9 @@ computer, 電腦</textarea>
     }
 
     function checkAnswer1() {
-        let input = document.getElementById('ans-input').value.trim().toLowerCase();
+        let input = document.getElementById('ans-input').value.trim();
         if(input === "") return;
-        showFeedback(input === currentWord.en.toLowerCase(), currentWord.en);
+        showFeedback(input.toLowerCase() === currentWord.en.toLowerCase(), currentWord.en, input);
     }
 
     function buildOptions(options, correctAns) {
@@ -283,7 +546,7 @@ computer, 電腦</textarea>
             let btn = document.createElement('button');
             btn.className = 'option-btn';
             btn.innerText = opt;
-            btn.onclick = () => showFeedback(opt === correctAns, correctAns);
+            btn.onclick = () => showFeedback(opt === correctAns, correctAns, opt);
             document.getElementById('input-area').appendChild(btn);
         });
     }
@@ -306,7 +569,7 @@ computer, 電腦</textarea>
             let selectBtn = document.createElement('button');
             selectBtn.className = 'btn select-btn';
             selectBtn.innerText = `選擇此選項`;
-            selectBtn.onclick = () => showFeedback(opt === correctWord.en, `正確答案: ${correctWord.en}`);
+            selectBtn.onclick = () => showFeedback(opt === correctWord.en, correctWord.en, `選項 ${index + 1}`);
             
             row.appendChild(playBtn);
             row.appendChild(selectBtn);
@@ -314,22 +577,134 @@ computer, 電腦</textarea>
         });
     }
 
-    function showFeedback(isCorrect, correctAnsText) {
+    function showFeedback(isCorrect, correctAnsText, userAnsText) {
         let f = document.getElementById('feedback');
         let isDark = document.body.classList.contains('dark-mode');
         f.innerText = isCorrect ? "✅ 正確！" : `❌ 錯誤！正確答案是：${correctAnsText}`;
         f.style.color = isCorrect ? (isDark ? "#4caf50" : "#28a745") : (isDark ? "#f44336" : "#dc3545");
+        
+        // 記錄結果
+        let qText = "";
+        if ([1, 5].includes(currentTestType)) qText = currentWord.zh;
+        else if ([3, 6].includes(currentTestType)) qText = currentWord.en;
+        else if (currentTestType === 2) qText = "🔊 (聽音選中)";
+        else if (currentTestType === 4) qText = "🔊 (聽音選英)";
+
+        testResults.push({
+            qText: qText,
+            userAns: userAnsText || "(未填寫)",
+            correctAns: correctAnsText,
+            isCorrect: isCorrect
+        });
+
         if (isCorrect) score++;
         document.getElementById('score').innerText = score;
         document.querySelectorAll('#input-area input, #input-area button').forEach(el => el.disabled = true);
-        document.getElementById('next-btn').classList.remove('hidden');
+        
+        const nextBtn = document.getElementById('next-btn');
+        nextBtn.innerText = "下一題";
+        nextBtn.style.backgroundColor = "#17a2b8";
     }
 
-    function nextQuestion() { currentQuestionIndex++; loadQuestion(); }
+    function nextQuestion() { 
+        // 如果是跳過（還沒記錄到結果），就記為錯誤
+        if (testResults.length <= currentQuestionIndex) {
+            let qText = "";
+            if ([1, 5].includes(currentTestType)) qText = currentWord.zh;
+            else if ([3, 6].includes(currentTestType)) qText = currentWord.en;
+            else if (currentTestType === 2) qText = "🔊 (聽音選中)";
+            else if (currentTestType === 4) qText = "🔊 (聽音選英)";
+
+            let correctAns = ([1, 4, 5, 6].includes(currentTestType)) ? currentWord.en : currentWord.zh;
+
+            testResults.push({
+                qText: qText,
+                userAns: "<span style='color:gray'>已跳過</span>",
+                correctAns: correctAns,
+                isCorrect: false
+            });
+        }
+        currentQuestionIndex++; 
+        loadQuestion(); 
+    }
     function goHome() {
+        if (timerInterval) clearInterval(timerInterval);
+        document.getElementById('timer').innerText = "";
         document.getElementById('test-view').classList.add('hidden');
+        document.getElementById('history-view').classList.add('hidden');
+        document.getElementById('detail-view').classList.add('hidden');
         document.getElementById('home-view').classList.remove('hidden');
         if ('speechSynthesis' in window) speechSynthesis.cancel();
+    }
+
+    // 歷史紀錄邏輯
+    function saveHistory(session) {
+        let history = JSON.parse(localStorage.getItem('pvqc_history') || '[]');
+        history.unshift(session); // 新紀錄放在最前面
+        if (history.length > 10) history = history.slice(0, 10); // 只留 10 筆
+        localStorage.setItem('pvqc_history', JSON.stringify(history));
+    }
+
+    function showHistory() {
+        if (timerInterval) clearInterval(timerInterval);
+        document.getElementById('timer').innerText = "";
+        document.getElementById('home-view').classList.add('hidden');
+        document.getElementById('detail-view').classList.add('hidden');
+        document.getElementById('test-view').classList.add('hidden');
+        document.getElementById('history-view').classList.remove('hidden');
+        
+        const history = JSON.parse(localStorage.getItem('pvqc_history') || '[]');
+        const list = document.getElementById('history-list');
+        
+        if (history.length === 0) {
+            list.innerHTML = "<p style='margin-top:20px'>尚無測驗紀錄</p>";
+            return;
+        }
+
+        list.innerHTML = history.map((h, index) => `
+            <div class="history-item" onclick="showDetail(${index})">
+                <div class="history-meta">
+                    <span>${h.time}</span>
+                    <span class="history-score">得分: ${h.score}/${h.total}</span>
+                </div>
+                <div class="history-title">${h.title}</div>
+            </div>
+        `).join('');
+    }
+
+    function showDetail(index) {
+        const history = JSON.parse(localStorage.getItem('pvqc_history') || '[]');
+        const record = history[index];
+        if (!record) return;
+
+        document.getElementById('history-view').classList.add('hidden');
+        document.getElementById('detail-view').classList.remove('hidden');
+        
+        let html = `<h3 style="margin-bottom:20px">${record.time} - 得分: ${record.score}/${record.total}</h3>`;
+        html += `<table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>題目</th>
+                            <th>您的答案</th>
+                            <th>正確答案</th>
+                            <th>結果</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+        
+        record.results.forEach(res => {
+            const statusClass = res.isCorrect ? 'result-correct' : 'result-wrong';
+            const statusText = res.isCorrect ? '✅' : '❌';
+            html += `<tr>
+                        <td>${res.qText}</td>
+                        <td>${res.userAns}</td>
+                        <td>${res.correctAns}</td>
+                        <td class="${statusClass}">${statusText}</td>
+                     </tr>`;
+        });
+        
+        html += `</tbody></table>`;
+        document.getElementById('detail-content').innerHTML = html;
     }
 </script>
 </body>
