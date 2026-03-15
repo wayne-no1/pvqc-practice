@@ -1,0 +1,398 @@
+expansion, 擴展；副檔名
+expansion board, 擴充卡（板）
+expert system, 專家系統（簡稱 ES）
+expert system shell, 專家系統（外殼）骨架
+extended partition, 延伸分割區
+extensible markup language, 延伸標記（籤）語言（簡稱 XML）
+external, 外部
+external code, 外碼
+external memory, 外部記憶體
+extranet, （企業）外部網路
+fair information practices, 公平資訊慣例（簡稱 FIPs）
+fault tolerant, 容錯的
+fault tolerant computer system, 容錯電腦系統
+feasibility study, 可行性研究
+fiber optics, 高纖
+fiber-optic cable, 光纖纜線
+file allocation table, 檔案配置表（簡稱 FAT）
+file transfer protocol, 檔案傳輸協定（簡稱 FTP）
+filter, 過濾器
+filtering, 過濾
+financial management system, 財務管理系統
+firewire, 火線
+firmware, 韌體
+first in first out, 先進先出（簡稱 FIFO）
+first mover, 先行者
+flaming, 謾罵
+flat-panel display, 平面式顯示器
+floating point, 浮點數
+floppy disk, 軟式磁碟片
+floppy disk drive, 軟式磁碟機（簡稱 FDD）
+folksonomy, 公眾分類法；大眾分類法
+footer, 頁尾
+force, 力；力量；武力；影響力
+force feedback, 力回饋
+foreign key, 外（來）鍵
+format, 格式化
+form, 表單
+format painter, 複製格式
+formula, 公式
+fourth generation language, 第四代語言（簡稱 4GL）
+fourth generation network, 第四代網路（簡稱 4G network）
+free, 免費
+franchiser, 加盟者；經銷商；代理商
+freemium, 免費加值
+frequently used list, 常用清單
+frequently used program, 常用程式
+full-duplex, 全雙工
+function argument tooltip, 函數參數提示
+function name, 函數名稱
+functional business system, 功能性的企業（業務）系統
+functional requirement, 功能性需求
+functional-specific application program, 特定用途應用程式
+fuzzy, 模糊的
+fuzzy logic, 模糊邏輯
+Gantt chart, 甘特圖
+GDSS, 群組決策支援系統（英文簡稱）
+general control, 一般控制
+general-purpose application program, 一般用途應用程式
+genetic algorithm, 基因演算法
+global business driver, 全球商務驅動
+global information technology management, 全球資訊科技管理
+global system for mobile communication, 全球行動通訊系統（簡稱 GSM）
+global variable, 全域變數
+goal-seeking analysis, 目標搜尋分析
+golden rule, 黃金原則（規則）
+graphical user interface, 圖形化使用介面（簡稱 GUI）
+graphics program, 圖形程式
+grid, 網格；電網
+grid computing, 網格運算
+group decision support system, 群組決策支援系統（簡稱 GDSS）
+groupware, 群組軟體
+GSM, 全球行動通訊系統（英文簡稱）
+gutter, 裝訂線
+gutter margin, 裝訂邊
+hacking, 駭客入侵
+half-duplex, 半雙工
+hard memory failure, 記憶體硬體故障
+hard page break, 硬分頁符號
+hardware, 硬體
+hardware resource, 硬體資源
+head crash, 磁頭碰撞
+header, 頁首
+header row, 標題列
+Hewlett-Packard, 惠普（一種知名電腦品牌）
+hierarchical structure, 階層式架構
+high availability computing, 高度可用性計（運）算
+high capacity, 高容量
+high capacity floppy disk, 高容量軟碟
+high definition multimedia interface, 高清晰度多媒體介面（簡稱 HDMI）
+high level language, 高階語言
+hit counter, 點選計數器
+hotspot, 熱點
+human factor feasibility, 人為因素可行性
+human resource information system, 人力資源資訊系統
+hybrid computing model, 混合式運算模型
+hybrid model, 混合式模型
+hypertext link, 超文字連結
+Hz, 赫茲（的英文簡稱）
+hypertext transfer protocol secure, 安全（加密）超文字傳輸協定（簡稱 HTTPS）
+IA, 資訊家電（英文簡稱）
+ID, 身分（的英文簡稱）
+identification system, （身分）辨識系統
+identity, 身分；確認
+identity theft, 身分盜竊
+IM, 即時通訊（縮寫）
+image scanner, 影像掃描器
+impact analysis, 影響分析
+impact printer, 撞擊式印表機
+implementation, 執行；實作
+inference, 推理
+inference engine, 推理引擎
+information asymmetry, 資訊不對稱
+information density, 資訊密集度
+information policy, 資訊政策
+information product, 資訊產品
+information security, 資訊安全
+information system activity, 資訊系統活動
+information system control, 資訊系統控制
+information system department, 資訊系統部門
+information system literacy, 資訊系統素養
+information system manager, 資訊系統經理（管理者）
+information system model, 資訊系統模型
+information system plan, 資訊系統計畫
+information technology infrastructure, 資訊科技基礎建設
+informed consent, 告知後同意
+infrared, 紅外線
+inheritance, 繼承
+ink jet printer, 噴墨印表機
+input control, 輸入控制
+inspection, 檢測；檢查；視察
+institute of electrical and electronics engineers, 國際電機電子工程協會（簡稱 IEEE）
+instruction, 指令
+integer, 整數
+integrated services digital network, 整體服務數位網路（簡稱 ISDN）
+intellectual, 理智做事者；知識份子；智力的；聰明的
+intellectual property rights, 智慧財產權（簡稱 IPR）
+intellectual property theft, 智慧財產權偷盜（或剽竊）
+intelligent, 聰明的；智慧的；智能的
+intelligent agent, 智慧（能）代理人
+intelligent agent shopping bot, 智能（慧）型代理購物機器人
+intelligent technology, 智能技術
+intelligent transportation system, 智慧型運輸系統（簡稱 ITS）
+interactive, 互動式的
+interactive marketing, 互動行銷
+interenterprise information system, 跨企業資訊系統；企業間的資訊系統
+interface, 介面
+intermediate, 中間的；中級的
+internal supply chain, 內部供應鏈
+international standard book number, 國際標準書號（簡稱 ISBN）
+international organization for standardization, 國際標準組織（簡稱 ISO）
+Internet and telecommunication technology, 網際網路與電信通訊科技（簡稱 ITT）
+Internet service provider, 網際網路服務提供者（簡稱 ISP）
+Internet message access protocol, 網路訊息存取通訊協定（簡稱 IMAP）
+Internet technology, 網際網路科技
+interpret, 直譯
+interorganizational system, 跨組織系統
+interpreter, 直譯器
+Intranet, （企業）內部網路
+intrusion, 入侵；侵擾
+intrusion detection system, 入侵偵測系統
+investment workstations, 投資工作站
+ionizing, 游離輻射
+IP datagram, IP 資料包；IP 數據包
+IPR, 智慧財產權（英文簡稱）
+IS operations management, 資訊系統作業管理
+IS specialist, 資訊系統專家
+ISDN, 整體服務數位網路（英文簡稱）
+ISP, 網際網路服務提供者（英文簡稱）
+IT architecture, 資訊科技架構
+IT planning process, 資訊科技規劃程序
+IT staff planning, 資訊科技人員規劃
+ITS, 智慧型運輸系統（英文簡稱）
+IU, 輸入單元（英文簡稱）
+JAD, 聯合應用程式設計（英文簡稱）
+JIT, 及時（英文簡稱）
+joint application design, 聯合應用程式設計（簡稱 JAD）
+joystick, 搖桿
+just-in-time, 及時（簡稱 JIT）
+just-in-time strategy, 及時策略
+key, 關鍵（值）
+key field, 鍵值欄位
+keylogger, 鍵盤測錄程式
+kiosk, 資訊服務站
+KM, 知識管理（的英文簡稱）
+KMS, 知識管理系統（英文簡稱）
+knowledge base, 知識庫
+knowledge economy, 知識經濟
+knowledge management, 知識管理（簡稱 KM）
+knowledge management system, 知識管理系統（簡稱 KMS）
+knowledge network system, 知識網路系統
+knowledge work system, 知識工作系統（簡稱 KWS）
+knowledge-creating company, 知識創造公司
+language translator, 語言翻譯器
+laptop computer, 膝上型電腦
+laser diode, 雷射二極體
+last in first out, 後進先出（簡稱 LIFO）
+learning management system, 學習管理系統（簡稱 LMS）
+legacy, 遺留；舊的；傳統的
+lease line, 專線
+legacy system, 遺留系統；舊的系統；傳統的系統
+legal and political feasibility, 法律與政治可行性
+liability, 賠償責任
+leveraging investment in IT, 在資訊科技以槓桿運作投資
+line printer, 列式印表機
+link page, 連結頁面
+linked list, 鍵結串列
+listbox, 清單方塊
+local variable, 區域變數
+LMS, 學習管理系統（英文簡稱）
+localization, 在地化；本土化
+lock in customer and supplier, 鎖定顧客與供應商
+logic unit, 邏輯單元
+logical bomb, 邏輯炸彈
+logical data element, 邏輯資料元素
+logical model, 邏輯模型
+long tail marketing, 長尾行銷
+low level language, 低階語言
+machine control, 機器控制
+machine language, 機器語言
+machine learning, 機器學習
+Macintosh operating system, 麥金塔作業系統
+magnetic, 磁性的；吸引力
+magnetic disk, 磁碟片
+magnetic storage medium, 磁性儲存媒體
+magnetic stripe, 磁條
+magnetic tape, 磁帶
+mailing list, 郵件論壇；郵件清單
+mainframe, 大型電腦；大型主機
+mainframe system, 大型主機系統
+maintenance, 維護
+malware, 惡意軟體程式
+managed security service provider, 安全管理服務的供應商（簡稱 MSSP）
+management involvement, 管理參與
+management support system, 管理支援系統
+managing information technology, 管理資訊科技
+manufacturing execution system, 製造執行系統（簡稱 MES）
+manufacturing information system, 製造資訊系統（縮寫為 MIS）
+margin, 頁邊的空白；利潤
+market creator, 市場創建者
+market entry cost, 市場進入成本
+marketing information system, 行銷資訊系統
+mashups, 一種混搭網路的應用程式稱呼
+mask ROM, 罩式 ROM
+mass customization, 大量客製化
+master drive, 主硬碟；開機硬碟
+MD, 訊息摘要（英文簡稱）
+media, 媒體
+menu cost, 單選成本
+MES, 製造執行系統（英文簡稱）
+message digest, 訊息摘要（簡稱 MD）
+metropolitan area network, 都會網路（簡稱 MAN）
+micro piezo, 微針點壓電
+microcomputer, 微電腦
+micropayment, 微付費
+micropayment system, 微付費系統
+microwave transmission, 微波傳輸
+middle management, 中階管理層
+middleware, 中介軟體
+millions of instructions per second, 每秒百萬指令（簡稱 MIPS）
+minicomputer, 小型電腦；迷你電腦
+MIPS, 每秒百萬指令（英文簡稱）
+mirror margins, 左右對稱
+MIS audit, 資訊管理系統稽核（審計）
+mobile commerce, 行動電子商務
+model base, 模式庫
+modulator-demodulator, 調變-解調器
+Moore's law, 摩爾定律
+motion, 運動；移動
+MSSP, 安全管理服務的供應商（英文簡稱）
+multicore processor, 多核心處理器
+multidimensional model, 多維度模型
+multinational enterprise, 多國企業
+multiple input multiple output, 多重輸入多重輸出（簡稱為 MIMO）
+multi-processing system, 多元處理系統
+multi-programming system, 多元程式系統
+multipurpose internet mail extensions, 多用途網際網路郵件擴充（協定）（簡稱為 MIME）
+multitasking, 多工
+multitouch, 多點觸控
+musical instrument digital interface, 樂器數位介面（簡稱為 MIDI）
+nanotechnology, 奈米科技
+NAP, 網路存取點（基地）（英文簡稱）
+narrow column tooltip, 窄欄工具提示
+national information infrastructure, 國家資訊基礎建設（簡稱 NII）
+National Science Foundation, 國家科學基金會（簡稱 NSF）
+natural language, 自然語言
+navigation bar, 導覽列
+net marketplace, 網路市集
+netbook, 小筆電
+network access point, 網路存取點（基地）（簡稱 NAP）
+network architecture, 網路架構
+network computer, 網路電腦
+network computing, 網路計算
+network economics, 網路經濟
+network interoperability, 網路互連性
+network resource, 網路資源
+network structure, 網路式架構
+network topology, 網路拓樸
+neural network, 類神經網路
+newsgroup, 新聞群組
+noise reduction, 雜訊減少
+non-breaking space, 不間斷空間
+non-contiguous, 不相鄰的範圍
+non-impact printer, 非撞擊式印表機
+non-ionizing, 非游離輻射
+nonobvious relationship awareness, 不明顯關聯察覺（簡稱 NORA）
+nonobviousness, 非顯而易見性；不明顯
+nonvolatile memory, 非揮發性記憶體
+NORA, 不明顯關聯察覺（英文簡稱）
+notebook computer, 筆記型電腦
+number format, 數值格式
+numeric format, 數字格式
+object linking and embedding, 物件連結與崁入（簡稱 OLE）
+object program, 目的程式
+object-oriented, 物件導向
+object-oriented database, 物件導向式資料庫（簡稱 OODB）
+object-oriented DBMS, 物件導向式資料庫管理系統
+object-oriented development, 物件導向開發
+object-oriented model, 物件導向模型（簡稱 OOM）
+object-relational DBMS, 物件關聯式資料庫管理系統
+OEM, 委託製造廠；貼牌生產（製造廠）；初始設備製造廠
+offshore software outsourcing, 軟體境外外包
+onboard VGA, 內含顯示晶片（VGA）
+on-demand computing, 即需即運算；隨需運算
+online, 線上
+online e-mail, 線上電子郵件
+online game, 線上遊戲
+online transaction processing system, 線上交易處理系統
+OODB, 物件導向式資料庫（英文簡稱）
+open source software, 開放原始碼軟體
+open system interconnection, 開放式系統互聯（縮寫為 OSI）
+open system interconnection model, 開放系統連結模式（型）（OSI 模式）
+operand, 運算元
+operation code, 運算碼
+operation support system, 營運支援系統
+operational CRM, 操作型顧客關係管理
+operational feasibility, 操作（或運營）可行性
+operational management, 經營管理層
+operator, 運算（符號）子；操作員
+opt in, 選擇加入；進入控制；事前同意
+opt out, 選擇退出；脫離控制
+optical character recognition, 光學字元辨識軟體（簡稱 OCR）
+optical input device, 光學輸入設備
+optical scanning, 光學掃描
+optical storage device, 光學儲存設備
+optimization analysis, 最佳化分析
+Oracle, 甲骨文（一種知名軟體品牌）
+ordered list, 有序串列
+organizational analysis, 組織分析
+organizational impact analysis, 組織影響分析
+original equipment manufacturer, 貼牌生產（廠）；原廠委託製造加工者（簡稱 OEM）
+orphan, 段落遺留首行
+oscillation, 震盪
+output device, 輸出設備
+output control, 輸出控制
+packet, 封包；分封
+packet filtering, 封包過濾
+packet switching, 分封交換（技術）
+paint program, 畫圖程式
+PAN, 個人區域網路（英文簡稱）
+parallel port, 平行埠
+partner relationship management, 夥伴關係管理（簡稱 PRM）
+patch management, 修補管理
+petabyte, 千兆位元組（縮寫 PB）
+patent right, 專利權
+PC game, （個人）電腦遊戲
+PCI Express, 周邊元件互聯快捷（擴充槽）（簡稱 PCI-E）
+peer-to-peer, 點對點（對等）式（簡稱 P2P）
+peer, 同輩；對等
+peer-to-peer network, 點對點（對等）式網路
+peer-to-peer network, 點對點（對等）式網路
+percent format, 百分比格式
+peripheral component interconnect, 周邊元件互聯（擴充槽）（簡稱 PCI）
+peripheral device, 周邊設備
+peripheral port, 周邊（設備的）連接埠
+personal area network, 個人區域網路（簡稱 PAN）
+personal digital assistant, 個人數位助理（簡稱 PDA）
+personal information management, 個人資訊管理（簡稱 PIM）
+personalization, 個人化
+PERT chart, PERT（計畫評估和審查技術）圖
+phased approach, 階段性方法；分階段實行的
+photo-manipulation program, 照片處理程式
+picosecond, 皮秒（簡稱 ps）
+picture, 圖片
+picture box, 圖片方塊
+PIM, 個人資訊管理（英文簡稱）
+pinned item list, 固定項目清單
+pivot, 樞紐；關鍵的
+PKI, 公開金鑰基礎建設（英文簡稱）
+planning, 規劃
+platform as a service, 平臺即服務（簡稱為 PaaS）
+plotter, 繪圖機
+plug and play, 隨插即用（簡稱 PnP）
+point, 點；一種尺寸單位（簡稱 PT）
+point of sale, 銷售時點（管理）（簡稱 POS）
+pointing device, 定位裝置；指向設備
+policy, 政策
+point-to-point tunneling protocol, 點對點通道協定（簡稱 PPTP）
+polymorphism, 多型
