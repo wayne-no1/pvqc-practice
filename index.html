@@ -104,9 +104,15 @@
     </div>
     <textarea id="vocab-input" rows="8" placeholder="正在從檔案載入預設單字..."></textarea>
     <h3>步驟 2：選擇測驗模式</h3>
-    <div style="margin-bottom: 15px;">
-        <label for="q-count" style="font-size: 18px; color: var(--text-color); font-weight: bold;">測驗題數 (最高 100 題)：</label>
-        <input type="number" id="q-count" value="20" min="1" max="100" style="width: 70px; font-size: 18px; padding: 5px; text-align: center; border: 1px solid var(--input-border); border-radius: 5px; background-color: var(--input-bg); color: var(--text-color);">
+    <div style="margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <div>
+            <label for="q-count" style="font-size: 18px; color: var(--text-color); font-weight: bold;">測驗題數 (最高 100 題)：</label>
+            <input type="number" id="q-count" value="20" min="1" max="100" style="width: 70px; font-size: 18px; padding: 5px; text-align: center; border: 1px solid var(--input-border); border-radius: 5px; background-color: var(--input-bg); color: var(--text-color);">
+        </div>
+        <div style="display: flex; align-items: center;">
+            <input type="checkbox" id="enable-timer" checked style="width: 20px; height: 20px; margin-right: 8px; cursor: pointer;">
+            <label for="enable-timer" style="font-size: 18px; color: var(--text-color); font-weight: bold; cursor: pointer;">啟用計時 (15 分鐘)</label>
+        </div>
     </div>
     <div style="text-align: left; display: inline-block; margin-bottom: 20px; font-size: 20px;">
         <div style="margin: 10px 0; display: flex; align-items: center;">
@@ -135,7 +141,7 @@
         </div>
     </div>
     <div class="test-btn-group">
-        <button class="btn select-btn" onclick="startSelectedModes()" style="width: 80%; font-size: 20px; font-weight: bold;">🚀 開始勾選的練習 (每項 15 分鐘)</button>
+        <button class="btn select-btn" onclick="startSelectedModes()" style="width: 80%; font-size: 20px; font-weight: bold;">🚀 開始勾選的練習</button>
     </div>
         <br>
         <button class="btn home-btn" onclick="showHistory()">📊 查看最近 10 次紀錄</button>
@@ -287,7 +293,12 @@
             return; 
         }
         startTest(modeQueue[currentModeIndex]);
-        startTimer(15 * 60); 
+        if (document.getElementById('enable-timer').checked) {
+            startTimer(15 * 60); 
+        } else {
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById('timer').innerText = "";
+        }
     }
 
     function startTimer(seconds) {
@@ -389,21 +400,33 @@
             if (!originalLine) continue;
             
             let en = "", zh = "";
-            let parts = originalLine.split(/[,，;:：;\t\-|\/]| {2,}/);
+            // 優先嘗試明確的分隔符號（排除掉會出現在單字內的 -）
+            let parts = originalLine.split(/[,，;:：\t|]| {2,}/);
+            
             if (parts.length >= 2) {
                 en = parts[0].trim();
-                zh = parts.slice(1).join(',').trim();
+                // 過濾掉剩餘部分可能出現的空值
+                zh = parts.slice(1).map(p => p.trim()).filter(p => p).join(', ');
             } else {
+                // 如果沒有明確分隔符號，則尋找第一個中文字元作為分界點
                 const cjkMatch = originalLine.match(/[\u4e00-\u9fa5]/);
                 if (cjkMatch) {
                     const index = cjkMatch.index;
                     en = originalLine.substring(0, index).trim();
                     zh = originalLine.substring(index).trim();
                 } else {
-                    let spaceParts = originalLine.split(/\s+/);
-                    if (spaceParts.length >= 2) {
-                        en = spaceParts[0].trim();
-                        zh = spaceParts.slice(1).join(' ').trim();
+                    // 如果全是英文，則尋找是否有 " - " (前後有空格的連字號) 作為分隔
+                    let dashSplit = originalLine.split(/ \- /);
+                    if (dashSplit.length >= 2) {
+                        en = dashSplit[0].trim();
+                        zh = dashSplit.slice(1).join(' ').trim();
+                    } else {
+                        // 最後手段：使用第一個空格
+                        let spaceIndex = originalLine.indexOf(' ');
+                        if (spaceIndex !== -1) {
+                            en = originalLine.substring(0, spaceIndex).trim();
+                            zh = originalLine.substring(spaceIndex).trim();
+                        }
                     }
                 }
             }
